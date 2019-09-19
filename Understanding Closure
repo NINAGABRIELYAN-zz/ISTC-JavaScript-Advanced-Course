@@ -1,0 +1,36 @@
+<script>
+// find the name of the function
+    var x = function (){}
+    console.log(x.name)
+// version 2
+    var y = {
+        myFunc: function(){}
+    }
+    console.log(y.myFunc.name)
+// increment the inner value
+function createCounter(){
+    let counter = 0;
+    const myFunction =
+    function(){
+        counter=counter + 1
+        return counter
+    }
+    return myFunction
+}
+const increment = createCounter()
+const c1 = increment()
+const c2 = increment()
+const c3 = increment()
+console.log(c1, c2, c3)
+// return the sum of the values in the nested func
+var y = function (a, b){
+    if (a+b==15 || a-b==15){
+        return true
+    }else if(a==15 || b==15){
+        return true
+    }else{
+        return "Go to hell"
+    }
+}
+console.log(y(2,5))
+</script>
