@@ -29,7 +29,7 @@ var y = function (a, b){
     }else if(a==15 || b==15){
         return true
     }else{
-        return "Go to hell"
+        return "Try again"
     }
 }
 console.log(y(2,5))
