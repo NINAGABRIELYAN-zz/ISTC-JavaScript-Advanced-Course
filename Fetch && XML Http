@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fetch</title>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            overflow: hidden
+        }
+
+        h1,
+        h3 {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: rgba(27, 25, 25, 0.685);
+            margin-top: 0%
+        }
+
+        .fetch {
+            margin: auto;
+            margin-top: 0%;
+            width: 60%;
+            flex-direction: column;
+            align-content: center;
+        }
+
+        button {
+            width: 8vw;
+            height: 3vw;
+            margin: 0.5vw;
+            margin-left: 5%;
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .09), inset 0 1px 0 rgba(255, 255, 255, .04), 0 0 1px rgba(0, 0, 0, .3), 0 0 10px rgba(0, 0, 0, .1);
+            border-radius: 100px;
+            background-color: #ffffffe6;
+            /* line-height: 18px; */
+            text-align: center;
+            font-size: 1vw;
+            font-family: 'Comic Sans';
+            overflow: hidden;
+            cursor: pointer
+        }
+
+        button:hover {
+            background-color: rgba(211, 201, 194, 0.651)
+        }
+
+        button:focus {
+            background-color: rgba(196, 192, 192, 0.781);
+            outline: none
+        }
+
+        #loader {
+            display: none;
+            float: right;
+            position: relative;
+            width: 64px;
+            height: 64px;
+        }
+
+        #loader div {
+            position: absolute;
+            top: 27px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: rgb(128, 117, 117);
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+
+        #loader div:nth-child(1) {
+            left: 6px;
+            animation: loader1 0.6s infinite;
+        }
+
+        #loader div:nth-child(2) {
+            left: 6px;
+            animation: loader2 0.6s infinite;
+        }
+
+        #loader div:nth-child(3) {
+            left: 26px;
+            animation: loader2 0.6s infinite;
+        }
+
+        #loader div:nth-child(4) {
+            left: 45px;
+            animation: loader3 0.6s infinite;
+        }
+
+        @keyframes loader1 {
+            0% {
+                transform: scale(0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes loader3 {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        @keyframes loader2 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(19px, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fetch">
+        <h1>Javascript requests</h1>
+        <h3>XML Http</h3>
+        <div id="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <button id="getDataXMLHttp"><strong>GET</strong> in console</button><br>
+        <button id="getXMLHttpDOM"><strong>GET</strong> in DOM</button><br>
+        <button id="postData"><strong>POST</strong> in console</button><br>
+        <button id="postDataDom"><strong>POST</strong> in DOM</button><br>
+        <h3>Fetch</h3>
+        <button id="getData"><strong>GET</strong> with if, else</button><br>
+        <button id="justGetIt"><strong>GET</strong> in console</button><br>
+        <button id="postData"><strong>POST</strong> in console</button><br>
+        <button id="postDataDOM"><strong>POST</strong> in DOM</button><br>
+        <div id="result"></div>
+    </div>
+    <script>
+        // FETCH get data in console with if, else method
+        document.getElementById('getData').addEventListener('click', getData);
+        const uri = 'https://jsonplaceholder.typicode.com/users'
+        function getData() {
+            fetch(uri)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("BOBOBO")
+                    }
+                })
+                .then((jsonData) => {
+                    console.log(jsonData);
+                })
+                .catch((err) => {
+                    console.error("error", err.message)
+                })
+        }
+        // FETCH get data in console
+        document.getElementById('justGetIt').addEventListener('click', justGetIt);
+        function justGetIt() {
+            fetch('https://jsonplaceholder.typicode.com/users')
+                .then(response => response.json())
+                .then(json => console.log(json));
+        }
+        // XML Http get data
+        document.getElementById('getDataXMLHttp').addEventListener('click', getDataXMLHTTP);
+        function getDataXMLHTTP() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(xhttp.responseText);
+                    document.getElementById("loader").style.display = "block";
+                }
+            }
+            //document.getElementById("loading").innerHTML = '<img src="89.gif" />';
+            xhttp.open("GET", 'https://jsonplaceholder.typicode.com/todos/1', true);
+            xhttp.send();
+        };
+        // XML Http post data
+        document.getElementById('postData').addEventListener('click', postData);
+        function postData() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(xhttp.responseText);
+                    document.getElementById("loader").style.display = "block";
+                }
+            }
+            xhttp.open("POST", 'https://jsonplaceholder.typicode.com/todos/1', true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            //still thinking
+            xhttp.send("userId=Robert");
+        };
+
+    </script>
+</body>
+
+</html>
