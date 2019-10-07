@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shooter</title>
+    <link rel="stylesheet" type="text/css" href="Shooter-css.css">
+</head>
+
+<body>
+    <div class="shooter">
+        <img id="xman" ,  src = "Img/paint-ball-shooter.png", usemap = "#trigger">
+    <map name = "trigger">
+        <area shape = "cicle" coords = "90,58,3">
+    </map>
+    </div>
+    <div id="bullet"></div>
+    <div class="personaje">
+        <img id = "victim", src="Img/paintball-player-silhouette-5.png">
+        <div id="bullet1"></div>
+    </div>
+    <script>
+        document.getElementById("xman").addEventListener("click", function (shoot){
+            shoot.preventDefault;
+            let bull = document.getElementById("bullet");
+            bull.classList.remove("bullet_animate");
+            void bull.offsetWidth;
+            bull.classList.add("bullet_animate");
+        }, false);
+        document.getElementById("victim").addEventListener("click", function (shootAgainst){
+            shootAgainst.preventDefault;
+            let bull = document.getElementById("bullet1");
+            bull.classList.remove("bullet_animate2");
+            void bull.offsetWidth;
+            bull.classList.add("bullet_animate2");
+        }, false);
+    </script>
+</body>
+
+</html>
